@@ -18,62 +18,50 @@ class User:
         return self._access_level
 
     def work(self):
-        print(f'{self._name} выполняет свою работу')
-
-
-
-
-
-
-    # Описываем методы присущие родительскому классу
-    def public_id(self):
-        return f'Это открытый метод. Пользователь: {name} с идентификатором: {id}'
-
-    def __private_access_level(self):
-        return f'Это приватный метод. Админ по имени {name} с идентификатором: {id} и уровнем доступа {access_level}'
-
-    def access_level(self):
-        self.__private_access_level = user
-
-    def user_work(self):
-        print(f'Ввод данных в систему, редактирование и удаление данных')
-
-
+        print(f'\n{self._name} выполняет свою работу')
 
 # Создаем дочерний класс администраторов
 class Admin(User):
     def __init__(self, user_id, name):
-        super().__init__(user_id, name, ac  )
-        self.__privet_access_level = access_level
+        super().__init__(user_id, name, access_level='admin')
+        self._admin_access_level = 'admin'
 
+        
     # Описываем специфические методы присущие только дочернему классу
-    def add_user(self):
-        print(f'Добавление пользователя: {name} с идентификатором: {id}')
+    def add_user(self, users_list, user):
+        users_list.append(user)
+        print(f'Добавлен пользователь: {user.get_name()} c идентификатором - {user.get_user_id()}')
 
-    def remove_user(self):
-        print(f'Удаление пользователя: {name} с идентификатором: {id}')
+    def remove_user(self, users_list, user):
+        users_list.remove(user)
+        print(f'\nУдален пользователь:\n {user.get_name()} c идентификатором - {user.get_user_id()}')
 
-    def get_details(self):
-        details = (f'{self.public_id} - идентификатор пользователя с именем {self.public_name} '
-                   f'и уровнем доступа{self.__privet_access_level}')
-        return details
+    def get_admin_details(self):
+        return f'\n{self.get_user_id()} - идентификатор администратора с именем - {self.get_name()} и уровнем доступа - {self.get_access_level()}'
 
-    def set_private(self, value):
-        self.__privet_access_level = (value)
-        return value
-
-
+# Создаем список пользователей
+users = []
 
 # Создаем экземпляры класса 'Admin'
-admin1 = Admin(1, "Ермаков Юрий", 1)
-admin2 = Admin(2, "Сизенкова Ольга", 1)
+admin1 = Admin(1, "Ермаков Юрий")
+admin2 = Admin(2, "Сизенкова Ольга")
 
 # Добавляем экземпляр класса 'User'
-user1.add_user(3, "Васильев Иван")
-user2.add_user(4, "Иванов Василий")
-user3.add_user(5, "Маринина Мария")
-user4.add_user(6, "Кузнецова Ольга")
+user1 = User(3, "Васильев Иван")
+user2 = User(4, "Иванов Василий")
+user3 = User(5, "Маринина Мария")
+user4 = User(6, "Кузнецова Ольга")
 
-user2.user_work('Очень интересная информация')
+# Используем методы для управления пользователями
+admin1.add_user(users, user1)  # Добавление пользователя в список
+admin1.add_user(users, user2)  # Добавление пользователя в список
+admin1.add_user(users, user3)  # Добавление пользователя в список
+admin2.add_user(users, user4)  # Добавление пользователя в список
 
-user3.remove_user(5, "Маринина Мария")
+user2.work()
+
+admin1.remove_user(users, user3)  # Удаление пользователя из списка
+
+# Вывод информации об администраторах
+print(admin1.get_admin_details())
+print(admin2.get_admin_details())
