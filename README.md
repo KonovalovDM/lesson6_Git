@@ -1,2 +1,3 @@
 # lesson6_Git
- inheritance and rncapsulation
+___inheritance and encapsulation___
+
